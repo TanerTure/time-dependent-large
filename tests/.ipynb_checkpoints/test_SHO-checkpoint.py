@@ -151,6 +151,22 @@ def test_get_second_moments():
     assert np.allclose(second_moments_SHO[3], second_moments[3], atol=1e-15) #p_squared
 
 
+def test_SHO_distribution():
+    assert SHO.SHO_distribution(1, n=1) == [1]
+    assert np.allclose(SHO.SHO_distribution(1, n=2), [np.exp(-.5) / (np.exp(-.5) + np.exp(-1.5)),
+                                            np.exp(-1.5) / (np.exp(-.5) + np.exp(-1.5))
+                                           ]
+                      )
+    partition_function = .5 / np.sinh(.5)
+    energies = np.linspace(.5, 999.5, 1000)
+    SHO_distribution = np.exp(-energies) / partition_function
+    assert np.allclose(SHO.SHO_distribution(1, n=1000), SHO_distribution)
+    T = 2
+    partition_function = .5 / np.sinh(1 / 2 / T)
+    SHO_distribution = np.exp(-energies / T) / partition_function
+    assert np.allclose(SHO.SHO_distribution(T, n=1000), SHO_distribution)
+                                    
+
     
         
 if __name__ == "__main__":
