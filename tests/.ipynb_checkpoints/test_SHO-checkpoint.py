@@ -86,17 +86,19 @@ def test_p():
     else:
         assert False
 
+
 def get_H(hbar=1, w=1):
     H = np.zeros((3, 3), dtype=np.complex128)
-    H[0][0] = .5
+    H[0][0] = 0.5
     H[1][1] = 1.5
     H[2][2] = 2.5
-    H *= hbar*w
+    H *= hbar * w
     return H
-    
+
+
 def test_H():
     assert np.allclose(SHO.H(3), get_H(), atol=1e-15)
-    assert np.allclose(SHO.H(3, hbar=2, w=1),get_H(hbar=2, w=1), atol=1e-15)
+    assert np.allclose(SHO.H(3, hbar=2, w=1), get_H(hbar=2, w=1), atol=1e-15)
     try:
         SHO.H(0)
     except ValueError:
@@ -104,11 +106,12 @@ def test_H():
     else:
         assert False
     try:
-        SHO.H(3, hbar = 0)
+        SHO.H(3, hbar=0)
     except ValueError:
         assert True
     else:
         assert False
+
 
 def get_second_moments(hbar=1, m=1, w=1):
     p_squared = np.zeros((3, 3), dtype=np.complex128)
@@ -118,7 +121,7 @@ def get_second_moments(hbar=1, m=1, w=1):
     p_squared[2][0] = np.sqrt(2)
     p_squared[2][2] = -5
     p_squared *= -hbar * m * w / 2
-    
+
     x_squared = np.zeros((3, 3), dtype=np.complex128)
     x_squared[0][0] = 1
     x_squared[0][2] = np.sqrt(2)
@@ -126,7 +129,7 @@ def get_second_moments(hbar=1, m=1, w=1):
     x_squared[2][0] = np.sqrt(2)
     x_squared[2][2] = 5
     x_squared *= hbar / m / w / 2
-    
+
     xp = np.zeros((3, 3), dtype=np.complex128)
     xp[0][0] = 1
     xp[0][1] = 0
@@ -136,40 +139,56 @@ def get_second_moments(hbar=1, m=1, w=1):
     xp[2][0] = np.sqrt(2)
     xp[2][2] = 1
     xp *= 1j * hbar / 2
-    
+
     px = xp.conj().T
-    
+
     return x_squared, xp, px, p_squared
- 
+
 
 def test_get_second_moments():
     second_moments = get_second_moments()
     second_moments_SHO = SHO.get_second_moments(3)
-    assert np.allclose(second_moments_SHO[0], second_moments[0], atol=1e-15) #x_squared
-    assert np.allclose(second_moments_SHO[1], second_moments[1], atol=1e-15) #xp
-    assert np.allclose(second_moments_SHO[2], second_moments[2], atol=1e-15) #px
-    assert np.allclose(second_moments_SHO[3], second_moments[3], atol=1e-15) #p_squared
+    assert np.allclose(
+        second_moments_SHO[0], second_moments[0], atol=1e-15
+    )  # x_squared
+    assert np.allclose(second_moments_SHO[1], second_moments[1], atol=1e-15)  # xp
+    assert np.allclose(second_moments_SHO[2], second_moments[2], atol=1e-15)  # px
+    assert np.allclose(
+        second_moments_SHO[3], second_moments[3], atol=1e-15
+    )  # p_squared
 
 
 def test_SHO_distribution():
+    try: 
+        SHO.SHO_distribution(-1)
+    except ValueError:
+        assert True
+    else:
+        assert False
+    try:
+        SHO.SHO_distribution(1, hbar = 0)
+    except ValueError:
+        assert True
+    else:
+        assert False
+        
     assert SHO.SHO_distribution(1, n=1) == [1]
-    assert np.allclose(SHO.SHO_distribution(1, n=2), [np.exp(-.5) / (np.exp(-.5) + np.exp(-1.5)),
-                                            np.exp(-1.5) / (np.exp(-.5) + np.exp(-1.5))
-                                           ]
-                      )
-    partition_function = .5 / np.sinh(.5)
-    energies = np.linspace(.5, 999.5, 1000)
+    assert (SHO.SHO_distribution(0, n=2) == [1, 0]).all()
+    assert np.allclose(
+        SHO.SHO_distribution(1, n=2),
+        [
+            np.exp(-0.5) / (np.exp(-0.5) + np.exp(-1.5)),
+            np.exp(-1.5) / (np.exp(-0.5) + np.exp(-1.5)),
+        ],
+    )
+    partition_function = 0.5 / np.sinh(0.5)
+    energies = np.linspace(0.5, 999.5, 1000)
     SHO_distribution = np.exp(-energies) / partition_function
     assert np.allclose(SHO.SHO_distribution(1, n=1000), SHO_distribution)
     T = 2
-    partition_function = .5 / np.sinh(1 / 2 / T)
+    partition_function = 0.5 / np.sinh(1 / 2 / T)
     SHO_distribution = np.exp(-energies / T) / partition_function
     assert np.allclose(SHO.SHO_distribution(T, n=1000), SHO_distribution)
-                                    
 
-    
-        
 if __name__ == "__main__":
     pass
-
-    

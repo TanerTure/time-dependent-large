@@ -159,7 +159,21 @@ def test_get_second_moments():
 
 
 def test_SHO_distribution():
+    try: 
+        SHO.SHO_distribution(-1)
+    except ValueError:
+        assert True
+    else:
+        assert False
+    try:
+        SHO.SHO_distribution(1, hbar = 0)
+    except ValueError:
+        assert True
+    else:
+        assert False
+        
     assert SHO.SHO_distribution(1, n=1) == [1]
+    assert (SHO.SHO_distribution(0, n=2) == [1, 0]).all()
     assert np.allclose(
         SHO.SHO_distribution(1, n=2),
         [
@@ -175,7 +189,6 @@ def test_SHO_distribution():
     partition_function = 0.5 / np.sinh(1 / 2 / T)
     SHO_distribution = np.exp(-energies / T) / partition_function
     assert np.allclose(SHO.SHO_distribution(T, n=1000), SHO_distribution)
-
 
 if __name__ == "__main__":
     pass
