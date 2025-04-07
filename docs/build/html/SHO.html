@@ -36,33 +36,70 @@
   <section id="module-SHO">
 <span id="sho-module"></span><h1>SHO module<a class="headerlink" href="#module-SHO" title="Permalink to this heading">¶</a></h1>
 <p>This SHO.py module generates the matrix form for several common operators in the energy eigenbasis of the harmonic oscillator.</p>
-<p>Functions within can generate <span class="math notranslate nohighlight">\(\hat{x}, \hat{p}, \hat{a}^+, \hat{a}, \hat{H}\)</span>, and second moments of <cite>hat{x}</cite> and <cite>hat{p}</cite></p>
+<p>Functions within can generate <span class="math notranslate nohighlight">\(\hat{x}, \hat{p}, \hat{a}^+, \hat{a}, \hat{H}\)</span>, and second moments of <span class="math notranslate nohighlight">\(\hat{x}\)</span> and <span class="math notranslate nohighlight">\(\hat{p}\ (\hat{x}^2,\hat{x}\hat{p}\)</span>, <span class="math notranslate nohighlight">\(\hat{p}\hat{x}, \hat{p}^2)\)</span>.</p>
 <p class="rubric">Example</p>
-<p>&gt;&gt;&gt;import SHO
-&gt;&gt;&gt;SHO.a(3)
-array([[0.        +0.j, 1.        +0.j, 0.        +0.j],</p>
-<blockquote>
-<div><p>[0.        +0.j, 0.        +0.j, 1.41421356+0.j],
-[0.        +0.j, 0.        +0.j, 0.        +0.j]])</p>
-</div></blockquote>
-<p>&gt;&gt;&gt;SHO.a_dagger(3)
-array([[0.        +0.j, 0.        +0.j, 0.        +0.j],</p>
-<blockquote>
-<div><p>[1.        +0.j, 0.        +0.j, 0.        +0.j],
-[0.        +0.j, 1.41421356+0.j, 0.        +0.j]])</p>
-</div></blockquote>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">SHO</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">SHO</span><span class="o">.</span><span class="n">a</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">array([[0.        +0.j, 1.        +0.j, 0.        +0.j],</span>
+<span class="go">       [0.        +0.j, 0.        +0.j, 1.41421356+0.j],</span>
+<span class="go">       [0.        +0.j, 0.        +0.j, 0.        +0.j]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">SHO</span><span class="o">.</span><span class="n">a_dagger</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">array([[0.        +0.j, 0.        +0.j, 0.        +0.j],</span>
+<span class="go">       [1.        +0.j, 0.        +0.j, 0.        +0.j],</span>
+<span class="go">       [0.        +0.j, 1.41421356+0.j, 0.        +0.j]])</span>
+</pre></div>
+</div>
 <p>The matrices above are used to calculate the energy using the relation <span class="math notranslate nohighlight">\(H = a^+a + 1/2\)</span></p>
-<p>&gt;&gt;&gt;import numpy as np
-&gt;&gt;&gt;SHO.a_dagger(3)&#64;SHO.a(3) + 0.5 * np.eye(3)
-array([[0.5+0.j, 0. +0.j, 0. +0.j],</p>
-<blockquote>
-<div><p>[0. +0.j, 1.5+0.j, 0. +0.j],
-[0. +0.j, 0. +0.j, 2.5+0.j]])</p>
-</div></blockquote>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">SHO</span><span class="o">.</span><span class="n">a_dagger</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">@</span> <span class="n">SHO</span><span class="o">.</span><span class="n">a</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">array([[0.5+0.j, 0. +0.j, 0. +0.j],</span>
+<span class="go">       [0. +0.j, 1.5+0.j, 0. +0.j],</span>
+<span class="go">       [0. +0.j, 0. +0.j, 2.5+0.j]])</span>
+</pre></div>
+</div>
 <dl class="py function">
 <dt class="sig sig-object py" id="SHO.H">
 <span class="sig-prename descclassname"><span class="pre">SHO.</span></span><span class="sig-name descname"><span class="pre">H</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SHO.H" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Make the matrix representation of the Hamiltonian operator <span class="math notranslate nohighlight">\(\hat{H}\)</span></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – length and width of the resultant square matrix</p></li>
+<li><p><strong>w</strong> (<em>float</em><em>, </em><em>optional</em>) – frequency <span class="math notranslate nohighlight">\(\omega\)</span> of the harmonic oscilator</p></li>
+<li><p><strong>hbar</strong> (<em>float</em><em>, </em><em>optional</em>) – numerical value of physical constant <span class="math notranslate nohighlight">\(\hbar\)</span></p></li>
+<li><p><strong>m</strong> (<em>float</em><em>, </em><em>optional</em>) – mass <span class="math notranslate nohighlight">\(m\)</span> of harmonic oscillator</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out</strong> – matrix of size n by n that represents the Hamiltonian operator <span class="math notranslate nohighlight">\(\hat{H}\)</span></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>complex ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If n is less than or equal to 1, or w, hbar, m &lt;= 0</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#module-SHO" title="SHO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SHO</span></code></a></dt><dd><p>overall description of harmonic oscillator functions</p>
+</dd>
+<dt><a class="reference internal" href="#SHO.p" title="SHO.p"><code class="xref py py-obj docutils literal notranslate"><span class="pre">p</span></code></a></dt><dd><p>momentum operator</p>
+</dd>
+<dt><a class="reference internal" href="#SHO.x" title="SHO.x"><code class="xref py py-obj docutils literal notranslate"><span class="pre">x</span></code></a></dt><dd><p>position operator</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>The matrix <span class="math notranslate nohighlight">\(\hat{H}\)</span> in the eigenbasis of the Hamiltonian reads</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat{H}  = \hbar \omega \begin{bmatrix}
+    \frac{1}{2} &amp; 0 &amp; 0 \\
+     0 &amp; \frac{3}{2} &amp; 0 \\
+    0 &amp;   0 &amp; \frac{5}{2} \\
+    \end{bmatrix}\end{split}\]</div>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="SHO.SHO_distribution">
@@ -78,7 +115,7 @@ array([[0.5+0.j, 0. +0.j, 0. +0.j],</p>
 <dd class="field-odd"><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – length and width of the resultant square matrix</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>out</strong> – matrix of size n by n that represents the lowering operator <span class="math notranslate nohighlight">\(a\)</span></p>
+<dd class="field-even"><p><strong>out</strong> – matrix of size n by n that represents the lowering operator <span class="math notranslate nohighlight">\(\hat{a}\)</span></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>complex ndarray</p>
@@ -97,19 +134,25 @@ array([[0.5+0.j, 0. +0.j, 0. +0.j],</p>
 </dl>
 </div>
 <p class="rubric">Notes</p>
-<p>The matrix a in the eigenbasis of the Hamiltonian reads</p>
+<p>The matrix <span class="math notranslate nohighlight">\(\hat{a}\)</span> in the eigenbasis of the Hamiltonian reads:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat{a} = \begin{bmatrix}
+    0 &amp; \sqrt{1} &amp; 0 \\
+    0 &amp; 0        &amp; \sqrt{2} \\
+    0 &amp;   0      &amp; 0 \\
+    \end{bmatrix}\end{split}\]</div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="SHO.a_dagger">
 <span class="sig-prename descclassname"><span class="pre">SHO.</span></span><span class="sig-name descname"><span class="pre">a_dagger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SHO.a_dagger" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make the matrix representation of the raising operator <span class="math notranslate nohighlight">\(a^+\)</span></p>
+<dd><p>Make the matrix representation of the raising operator <span class="math notranslate nohighlight">\(\hat{a}^\dagger\)</span></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – length and width of the resultant square matrix</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>out</strong> – matrix of size n by n that represents the lowering operator <span class="math notranslate nohighlight">\(a\)</span></p>
+<dd class="field-even"><p><strong>out</strong> – matrix of size n by n that represents the raising operator <span class="math notranslate nohighlight">\(\hat{a}^\dagger\)</span></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>complex ndarray</p>
@@ -129,22 +172,147 @@ array([[0.5+0.j, 0. +0.j, 0. +0.j],</p>
 </div>
 <p class="rubric">Notes</p>
 <p>The matrix <span class="math notranslate nohighlight">\(a^\dagger\)</span> in the eigenbasis of the Hamiltonian reads</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}a^\dagger = \begin{bmatrix}
+    0 &amp; 0 &amp; 0 \\
+    \sqrt{1} &amp; 0 &amp; 0 \\
+    0 &amp;   \sqrt{2} &amp; 0 \\
+    \end{bmatrix}\end{split}\]</div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="SHO.get_second_moments">
 <span class="sig-prename descclassname"><span class="pre">SHO.</span></span><span class="sig-name descname"><span class="pre">get_second_moments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SHO.get_second_moments" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get all second moments of <span class="math notranslate nohighlight">\(\hat{x}\)</span> and <span class="math notranslate nohighlight">\(\hat{p}\)</span> <span class="math notranslate nohighlight">\((\hat{x}^2, \hat{x}\hat{p}, \hat{p}{x}, \hat{p}^2)\)</span></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – length and width of the resultant square matrices</p></li>
+<li><p><strong>w</strong> (<em>float</em><em>, </em><em>optional</em>) – frequnecy <span class="math notranslate nohighlight">\(\omega\)</span> of the harmonic oscillator</p></li>
+<li><p><strong>hbar</strong> (<em>float</em><em>, </em><em>optional</em>) – value of the physical constant :math: <cite>hbar</cite></p></li>
+<li><p><strong>m</strong> (<em>float</em><em>, </em><em>optional</em>) – mass :math: <cite>m</cite> of harmonic oscillator</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out</strong> – out[0] corresponds to <span class="math notranslate nohighlight">\(\hat{x}^2\)</span>, out[1] corresponds to <span class="math notranslate nohighlight">\(\hat{x}\hat{p}\)</span>,
+out[2] corresponds to <span class="math notranslate nohighlight">\(\hat{p}\hat{x}\)</span>, and out[3] corresponds to <span class="math notranslate nohighlight">\(\hat{p}^2\)</span></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of four complex ndarrays</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if <cite>n</cite> &lt;= 1 or any of <cite>w</cite>,`hbar`,`m` &lt;= 0:</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The matrices for the second-order operators in the basis of the eigenvectors of the Hamiltonian are given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat{x}^2 =  \frac{\hbar}{2m\omega} \begin{bmatrix}
+               1 &amp; 0 &amp; \sqrt{2} \\
+               0 &amp; 3 &amp; 0 \\
+               \sqrt{2} &amp; 0 &amp; 5
+               \end{bmatrix}
+\hat {x}\hat{p} = \frac{i\hbar}{2} \begin{bmatrix}
+                    1 &amp; 0 &amp; -\sqrt{2} \\
+                    0 &amp; 1 &amp; 0 \\
+                    \sqrt{2} &amp; 0 &amp; 1
+                    \end{bmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat{p}\hat{x} = -\frac{i\hbar}{2} \begin{bmatrix}
+                   1 &amp; 0 &amp; \sqrt{2} \\
+                   0 &amp; 1 &amp; 0 \\
+                   -\sqrt{2} &amp; 0 &amp; 1
+                   \end{bmatrix}
+\hat{p}^2 = \frac{m\hbar\omega}{2} \begin{bmatrix}
+                   1 &amp; 0 &amp; -\sqrt{2} \\
+                   0 &amp; 3 &amp; 0 \\
+                   -\sqrt{2} &amp; 0 &amp; 5
+                   \end{bmatrix}\end{split}\]</div>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="SHO.p">
 <span class="sig-prename descclassname"><span class="pre">SHO.</span></span><span class="sig-name descname"><span class="pre">p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SHO.p" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Make the matrix representation of the momentum operator <span class="math notranslate nohighlight">\(\hat{p}\)</span></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – length and width of the resultant square matrix</p></li>
+<li><p><strong>w</strong> (<em>float</em><em>, </em><em>optional</em>) – frequency <span class="math notranslate nohighlight">\(\omega\)</span> of the harmonic oscilator</p></li>
+<li><p><strong>hbar</strong> (<em>float</em><em>, </em><em>optional</em>) – numerical value of physical constant <span class="math notranslate nohighlight">\(\hbar\)</span></p></li>
+<li><p><strong>m</strong> (<em>float</em><em>, </em><em>optional</em>) – mass <span class="math notranslate nohighlight">\(m\)</span> of harmonic oscillator</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out</strong> – matrix of size n by n that represents the momentum operator <span class="math notranslate nohighlight">\(\hat{p}\)</span></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>complex ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If n is less than or equal to 1, or w, hbar, m &lt;= 0</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#module-SHO" title="SHO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SHO</span></code></a></dt><dd><p>overall description of harmonic oscillator functions</p>
+</dd>
+<dt><a class="reference internal" href="#SHO.x" title="SHO.x"><code class="xref py py-obj docutils literal notranslate"><span class="pre">x</span></code></a></dt><dd><p>position operator</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>The matrix <span class="math notranslate nohighlight">\(\hat{p}\)</span> in the eigenbasis of the Hamiltonian reads</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat{p}  =i\sqrt{\frac{m\hbar\omega}{2}} \begin{bmatrix}
+    0 &amp; -\sqrt{1} &amp; 0 \\
+    \sqrt{1} &amp; 0 &amp; -\sqrt{2} \\
+    0 &amp;   \sqrt{2} &amp; 0 \\
+    \end{bmatrix}\end{split}\]</div>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="SHO.x">
 <span class="sig-prename descclassname"><span class="pre">SHO.</span></span><span class="sig-name descname"><span class="pre">x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SHO.x" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Make the matrix representation of the position operator <span class="math notranslate nohighlight">\(\hat{x}\)</span></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – length and width of the resultant square matrix</p></li>
+<li><p><strong>w</strong> (<em>float</em><em>, </em><em>optional</em>) – frequency <span class="math notranslate nohighlight">\(\omega\)</span> of the harmonic oscilator</p></li>
+<li><p><strong>hbar</strong> (<em>float</em><em>, </em><em>optional</em>) – numerical value of physical constant <span class="math notranslate nohighlight">\(\hbar\)</span></p></li>
+<li><p><strong>m</strong> (<em>float</em><em>, </em><em>optional</em>) – mass <span class="math notranslate nohighlight">\(m\)</span> of harmonic oscillator</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out</strong> – matrix of size n by n that represents the position operator <span class="math notranslate nohighlight">\(\hat{x}\)</span></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>complex ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If n is less than or equal to 1, or w, hbar, m &lt;= 0</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#module-SHO" title="SHO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SHO</span></code></a></dt><dd><p>overall description of harmonic oscillator functions</p>
+</dd>
+<dt><a class="reference internal" href="#SHO.p" title="SHO.p"><code class="xref py py-obj docutils literal notranslate"><span class="pre">p</span></code></a></dt><dd><p>momentum operator</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>The matrix <span class="math notranslate nohighlight">\(\hat{x}\)</span> in the eigenbasis of the Hamiltonian reads</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat{x}  =\sqrt{\frac{\hbar}{2m\omega}} \begin{bmatrix}
+    0 &amp; \sqrt{1} &amp; 0 \\
+    \sqrt{1} &amp; 0 &amp; \sqrt{2} \\
+    0 &amp;   \sqrt{2} &amp; 0 \\
+    \end{bmatrix}\end{split}\]</div>
+</dd></dl>
 
 </section>
 
